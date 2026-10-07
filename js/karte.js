@@ -14,7 +14,7 @@
       style:function(f){var c=farben[f.properties.name]||'#003c32';return{color:c,weight:3,fillColor:c,fillOpacity:.18}},
       onEachFeature:function(f,l){flaechen[f.properties.name]=l;alle.addLayer(l);
         l.bindTooltip(f.properties.name,{sticky:true});
-        l.on('click',function(){map.flyToBounds(l.getBounds(),{padding:[20,20],duration:.8})})}
+        l.on('click',function(){map.fitBounds(l.getBounds(),{padding:[20,20],animate:false})})}
     }).addTo(map);
     L.geoJSON(g,{filter:function(f){return f.properties.kind==='route'},style:function(){return pfadStil},
       onEachFeature:function(f,l){l.bindPopup('<h3>'+f.properties.name+'</h3><p>'+(en?'Visitor trail (route data: OpenStreetMap).':'Besucherpfad (Verlauf: OpenStreetMap). Beschreibung, Faltblatt und Wanderkarte folgen auf der Pfadseite.')+'</p><a class="pfeil" href="'+(en?'../':'')+'wildnisgebiet.html">'+(en?'Read more':'Mehr erfahren …')+'</a>')}}).addTo(map);
@@ -24,8 +24,8 @@
     map.fitBounds(alle.getBounds(),{padding:[20,20]});
     document.querySelectorAll('[data-zoom-gebiet]').forEach(function(b){b.addEventListener('click',function(){
       var n=b.getAttribute('data-zoom-gebiet');
-      if(n==='alle')map.flyToBounds(alle.getBounds(),{padding:[20,20],duration:.8});
-      else if(flaechen[n])map.flyToBounds(flaechen[n].getBounds(),{padding:[20,20],duration:.8});
+      if(n==='alle')map.fitBounds(alle.getBounds(),{padding:[20,20],animate:false});
+      else if(flaechen[n])map.fitBounds(flaechen[n].getBounds(),{padding:[20,20],animate:false});
       el.focus({preventScroll:true});
     })});
   });
